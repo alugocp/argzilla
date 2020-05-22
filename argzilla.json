@@ -1,7 +1,6 @@
 {
   "language":"node",
   "out":"argparse.js",
-  "parameters":{},
   "options":[
     {
       "label":"out",

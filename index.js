@@ -11,6 +11,7 @@ try{
 }catch{
   throw new Error("Invalid Argzilla config file given");
 }
+validate(config);
 
 // Choose renderer
 let renderer=null;

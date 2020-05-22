@@ -1,0 +1,12 @@
+{
+  "language":"node",
+  "parameters":{
+    "max":1
+  },
+  "options":[
+    {
+      "label":"out",
+      "names":["-o","--out"]
+    }
+  ]
+}

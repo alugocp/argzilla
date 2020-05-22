@@ -1,33 +1,22 @@
 const NodeRenderer=require("./renderers/node.js");
+const validate=require("./lib/validate.js");
+const argparse=require("./argparse.js");
+const fs=require("fs");
 
-function argzilla(config){
-  /*let renderer=options.target;
-  let render=require(`./renderers/${renderer}.js`);*/
-  return NodeRenderer(config).render();
+// Call argparse
+let result=argparse(process.argv);
+let config=fs.readFileSync(result.options.in || "argzilla.json").toString();
+try{
+  config=JSON.parse(config);
+}catch{
+  throw new Error("Invalid Argzilla config file given");
 }
 
-let data=argzilla({
-  target:"node",
-  parameters:{
-    //min:0,
-    max:2
-  },
-  flags:[
-    {
-      label:"hello",
-      names:["-hello","--hello","-h"]
-    },
-    {
-      label:"goodbye",
-      names:["-bye","--goodbye","-b"]
-    }
-  ],
-  options:[
-    {
-      label:"name",
-      names:["name","n"],
-      required:true
-    }
-  ]
-});
-console.log(data);
+// Choose renderer
+let renderer=null;
+let lang=result.options.lang || config.language;
+if(lang=="node") renderer=NodeRenderer(config);
+if(!renderer) throw new Error("Invalid language specified");
+
+// Write output
+fs.writeFileSync(result.options.out || config.out,renderer.render());

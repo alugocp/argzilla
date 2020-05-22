@@ -1,12 +1,19 @@
 {
   "language":"node",
-  "parameters":{
-    "max":1
-  },
+  "out":"argparse.js",
+  "parameters":{},
   "options":[
     {
       "label":"out",
-      "names":["-o","--out"]
+      "names":["-o"]
+    },
+    {
+      "label":"in",
+      "names":["-f"]
+    },
+    {
+      "label":"lang",
+      "names":["-l"]
     }
   ]
 }

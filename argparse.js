@@ -19,6 +19,6 @@ module.exports=function(argv){
 		}
 		result.args.push(argv[a]);
 	}
-	if(result.args.length) throw new Error("Invalid number of parameters given");
+	if(result.args.length>1) throw new Error("Invalid number of parameters given");
 	return result;
 }

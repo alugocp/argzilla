@@ -13,6 +13,12 @@ try{
 }
 validate(config);
 
+// Handle init
+if(result.args.length && result.args[0]=="init"){
+  console.log(`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"options":[],\n\t"flags":[]\n}`);
+  process.exit(0);
+}
+
 // Choose renderer
 let renderer=null;
 let lang=result.options.lang || config.language;

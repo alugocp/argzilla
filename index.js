@@ -1,3 +1,4 @@
+const ClangRenderer=require("./renderers/clang.js");
 const NodeRenderer=require("./renderers/node.js");
 const validate=require("./lib/validate.js");
 const argparse=require("./argparse.js");
@@ -23,6 +24,7 @@ if(result.args.length && result.args[0]=="init"){
 let renderer=null;
 let lang=result.options.lang || config.language;
 if(lang=="node") renderer=NodeRenderer(config);
+else if(lang=="c") renderer=ClangRenderer(config);
 if(!renderer) throw new Error("Invalid language specified");
 
 // Write output

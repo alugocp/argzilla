@@ -1,5 +1,5 @@
 # Argzilla
-<img height="300" src="./argzilla.svg"/>
+<img height="300" src="./res/argzilla.svg"/>
 <br><br>
 A simple argparse generator developed by LugoCorp
 
@@ -9,7 +9,7 @@ A simple argparse generator developed by LugoCorp
 
 ## Language support
 - [x] Node.js
-- [ ] C/C++
+- [x] C/C++
 - [ ] Python
 - [ ] Lua
 - [ ] Ruby
@@ -28,7 +28,7 @@ A simple argparse generator developed by LugoCorp
 `program [command] [flags | options | args]`
 
 - For each input argument
-  - Check for command
+  - Check for command (not yet implemented)
   - Check against flags
   - Check against options
   - Anything else is an arg (if no command)

@@ -2,19 +2,27 @@
 module.exports=function(argv){
 	let result={flags:{},options:{},args:[]};
 	for(var a=2;a<argv.length;a++){
+		if(argv[a]=="-p"){
+			result.flags.print=true;
+			continue;
+		}
+		if(argv[a]=="--print"){
+			result.flags.print=true;
+			continue;
+		}
 		if(argv[a]=="-o"){
 			if(a==argv.length-1) throw new Error("No value was given for option '-o'");
-			result.options["out"]=argv[++a];
+			result.options.out=argv[++a];
 			continue;
 		}
 		if(argv[a]=="-f"){
 			if(a==argv.length-1) throw new Error("No value was given for option '-f'");
-			result.options["in"]=argv[++a];
+			result.options.in=argv[++a];
 			continue;
 		}
 		if(argv[a]=="-l"){
 			if(a==argv.length-1) throw new Error("No value was given for option '-l'");
-			result.options["lang"]=argv[++a];
+			result.options.lang=argv[++a];
 			continue;
 		}
 		result.args.push(argv[a]);

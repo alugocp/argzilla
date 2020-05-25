@@ -15,7 +15,7 @@ try{
 validate(config);
 
 // Handle init
-if(result.args.length && result.args[0]=="init"){
+if(result.params.length && result.params[0]=="init"){
   console.log(`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"options":[],\n\t"flags":[]\n}`);
   process.exit(0);
 }
@@ -28,4 +28,6 @@ else if(lang=="c") renderer=ClangRenderer(config);
 if(!renderer) throw new Error("Invalid language specified");
 
 // Write output
-fs.writeFileSync(result.options.out || config.out,renderer.render());
+let output=renderer.render();
+if(result.flags.print) console.log(output);
+else fs.writeFileSync(result.options.out || config.out,output);

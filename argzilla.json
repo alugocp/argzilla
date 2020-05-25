@@ -4,6 +4,12 @@
   "parameters":{
     "max":1
   },
+  "flags":[
+    {
+      "label":"print",
+      "names":["-p","--print"]
+    }
+  ],
   "options":[
     {
       "label":"out",

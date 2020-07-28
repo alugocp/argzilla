@@ -7,23 +7,6 @@ A simple argparse generator developed by LugoCorp
 - Options (you pass a value)
 - Commands
 
-## Language support
-- [x] Node.js
-- [x] C/C++
-- [ ] Python
-- [ ] Lua
-- [ ] Ruby
-- [ ] Java
-
-## Long-term language support
-- [ ] Golang
-- [ ] OCaml
-- [ ] Kotlin
-- [ ] Rust
-- [ ] PHP
-- [ ] C#
-- [ ] R
-
 ## Basic algorithm
 `program [command] [flags | options | args]`
 

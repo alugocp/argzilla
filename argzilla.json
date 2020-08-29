@@ -2,7 +2,7 @@
   "language":"javascript",
   "out":"argparse1.js",
   "parameters":{
-    "max":1
+    "max":0
   },
   "flags":[
     {
@@ -23,5 +23,12 @@
       "label":"lang",
       "names":["-l"]
     }
-  ]
+  ],
+  "commands":{
+    "init":{
+      "parameters":{
+        "max":0
+      }
+    }
+  }
 }

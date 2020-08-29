@@ -8,8 +8,7 @@ export default class RubyRenderer extends Renderer{
     code+="def argparse\n";
     code+="\targbox={options:{},flags:{},args:[]}\n";
     code+="\tparams=ARGV\n";
-    code+="\tstart=0\n";
-    code+=this.loopNode(children);
+    code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif argbox[:args].length<${minargs} then\n`;
       code+=`\t\t\traise \"${Strings.too_few_args}\"\n`;
@@ -18,12 +17,20 @@ export default class RubyRenderer extends Renderer{
     code+="\treturn argbox\nend\n";
     return code;
   }
-  commandNode():string{
-    return "toots";
+  commandNode(children:string[],i:number,name?:string):string{
+    let code=null;
+    if(i==0){
+      if(name) code=`\tif params[1]==\"${name}\" then\n\t\targbox[:command]=\"${name}\"\n${this.loopNode(2,children)}`;
+      else code=this.loopNode(1,children);
+    }else{
+      if(name) code=`\telsif params[1]==\"${name}\" then\n\t\targbox[:command]=\"${name}\"\n${this.loopNode(2,children)}`;
+      else code=`\telse\n${this.loopNode(1,children)}\tend\n`;
+    }
+    return code;
   }
-  loopNode(children:string[]):string{
+  loopNode(start:number,children:string[]):string{
     if(!children.length) return "";
-    let code="\tfor a in start..(params.length-1) do\n";
+    let code=`\tfor a in ${start}..(params.length-1) do\n`;
     code+="\t\tparam=params[a]\n";
     for(var a in children) code+=children[a];
     code+="\tend\n";

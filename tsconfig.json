@@ -12,6 +12,7 @@
     ]
   },
   "files":[
+    "src/argparse.js",
     "src/index.ts"
   ]
 }

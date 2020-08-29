@@ -1,32 +1,23 @@
 // Validates Argzilla inputs with regex
 
-export default function validate(config){
-
-  // Validation helpers
-  function validateKeys(obj,required:string[],optional?:string[]){
-    let keys=Object.keys(obj);
-    for(var a in required){
-      if(keys.indexOf(required[a])<0) throw new Error(`Missing key \"${required[a]}\"`);
-      keys.splice(keys.indexOf(required[a]),1);
-    }
-    for(var a in keys){
-      if(optional.indexOf(keys[a])<0) throw new Error(`Unknown key \"${keys[a]}\"`);
-    }
+function validateKeys(obj,required:string[],optional?:string[]){
+  let keys=Object.keys(obj);
+  for(var a in required){
+    if(keys.indexOf(required[a])<0) throw new Error(`Missing key \"${required[a]}\"`);
+    keys.splice(keys.indexOf(required[a]),1);
   }
-  function ensureList(obj,l?:number){
-    if(!(typeof(obj)=="object" && obj.length!=undefined)) throw new Error("Invalid type (list expected)");
-    if(l!=undefined && obj.length<l)throw new Error(`Too few arguments (At least ${l} expected)`);
+  for(var a in keys){
+    if(optional.indexOf(keys[a])<0) throw new Error(`Unknown key \"${keys[a]}\"`);
   }
-  function ensureString(obj){
-    if(typeof(obj)!="string") throw new Error("Invalid type (string expected)");
-  }
-
-  // Top-level validation
-  validateKeys(config,["language","out"],["parameters","options","flags"]);
-  ensureString(config.language);
-  ensureString(config.out);
-
-  // Validate options
+}
+function ensureList(obj,l?:number){
+  if(!(typeof(obj)=="object" && obj.length!=undefined)) throw new Error("Invalid type (list expected)");
+  if(l!=undefined && obj.length<l)throw new Error(`Too few arguments (At least ${l} expected)`);
+}
+function ensureString(obj){
+  if(typeof(obj)!="string") throw new Error("Invalid type (string expected)");
+}
+function validateOptions(config){
   if(config.options!=undefined){
     ensureList(config.options,1);
     for(var a in config.options){
@@ -39,8 +30,8 @@ export default function validate(config){
       }
     }
   }
-
-  // Validate flags
+}
+function validateFlags(config){
   if(config.flags!=undefined){
     ensureList(config.flags,1);
     for(var a in config.flags){
@@ -53,11 +44,34 @@ export default function validate(config){
       }
     }
   }
-
-  // Validate args
+}
+function validateArgs(config){
   if(config.parameters!=undefined){
     validateKeys(config.parameters,[],["min","max"]);
     if(config.parameters.max==undefined) config.parameters.max=undefined;
     if(config.parameters.min==undefined) config.parameters.min=undefined;
   }else config.parameters={max:undefined,min:undefined};
+}
+
+export default function validate(config){
+
+  // Top-level validation
+  validateKeys(config,["language","out"],["parameters","options","flags","commands"]);
+  ensureString(config.language);
+  ensureString(config.out);
+  validateOptions(config);
+  validateFlags(config);
+  validateArgs(config);
+
+  // Commands validation
+  if(config.commands!=undefined){
+    let keys=Object.keys(config.commands);
+    for(var a in keys){
+      let com=config.commands[keys[a]];
+      validateKeys(com,[],["parameters","options","flags"]);
+      validateOptions(com);
+      validateFlags(com);
+      validateArgs(com);
+    }
+  }
 }

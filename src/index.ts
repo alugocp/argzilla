@@ -17,10 +17,10 @@ try{
 validate(config);
 
 // Handle init
-/*if(result.params.length && result.params[0]=="init"){
-  console.log(`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"options":[],\n\t"flags":[]\n}`);
+if(result.command=="init"){
+  console.log(`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"parameters":{}\n\t"options":[],\n\t"flags":[],\n\t"commands":{}\n}`);
   process.exit(0);
-}*/
+}
 
 // Get renderer
 let r:Renderer=null;

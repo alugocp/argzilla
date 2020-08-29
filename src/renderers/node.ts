@@ -8,8 +8,7 @@ export default class NodeRenderer extends Renderer{
     code+="module.exports=function(){\n";
     code+="\tlet argbox={options:{},flags:{},args:[]};\n";
     code+="\tlet params=process.argv;\n";
-    code+="\tlet start=2;\n";
-    code+=this.loopNode(children);
+    code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif(argbox.args.length<${minargs}){\n`;
       code+=`\t\t\tthrow new Error(\"${Strings.too_few_args}\");\n`;
@@ -18,12 +17,20 @@ export default class NodeRenderer extends Renderer{
     code+="\treturn argbox;\n}\n";
     return code;
   }
-  commandNode():string{
-    return "toots";
+  commandNode(children:string[],i:number,name?:string):string{
+    let code=null;
+    if(i==0){
+      if(name) code=`\tif(params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
+      else code=this.loopNode(2,children);
+    }else{
+      if(name) code=`\telse if(params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
+      else code=`\telse{\n${this.loopNode(2,children)}\t}\n`;
+    }
+    return code;
   }
-  loopNode(children:string[]):string{
+  loopNode(start:number,children:string[]):string{
     if(!children.length) return "";
-    let code="\tfor(var a=start;a<params.length;a++){\n";
+    let code=`\tfor(var a=${start};a<params.length;a++){\n`;
     code+="\t\tlet param=params[a];\n";
     for(var a in children) code+=children[a];
     code+="\t}\n";

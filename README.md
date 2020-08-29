@@ -24,10 +24,10 @@ This repository comes with a couple of npm commands for building and testing.
 
 ## Targets
 #### Phase 1
-- [ ] JavaScript
+- [x] JavaScript
 - [ ] Python
 - [ ] Bash
-- [ ] Ruby
+- [x] Ruby
 - [ ] Java
 - [ ] C++
 - [ ] Lua

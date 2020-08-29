@@ -2,52 +2,61 @@
 
 export default function validate(config){
 
-  // Validate required fields
-  let keys=Object.keys(config);
-  if(keys.indexOf("language")<0) throw new Error("Must specify \"language\" in config file");
-  if(keys.indexOf("out")<0) throw new Error("Must specify \"out\" in config file");
+  // Validation helpers
+  function validateKeys(obj,required:string[],optional?:string[]){
+    let keys=Object.keys(obj);
+    for(var a in required){
+      if(keys.indexOf(required[a])<0) throw new Error(`Missing key \"${required[a]}\"`);
+      keys.splice(keys.indexOf(required[a]),1);
+    }
+    for(var a in keys){
+      if(optional.indexOf(keys[a])<0) throw new Error(`Unknown key \"${keys[a]}\"`);
+    }
+  }
+  function ensureList(obj,l?:number){
+    if(!(typeof(obj)=="object" && obj.length!=undefined)) throw new Error("Invalid type (list expected)");
+    if(l!=undefined && obj.length<l)throw new Error(`Too few arguments (At least ${l} expected)`);
+  }
+  function ensureString(obj){
+    if(typeof(obj)!="string") throw new Error("Invalid type (string expected)");
+  }
+
+  // Top-level validation
+  validateKeys(config,["language","out"],["parameters","options","flags"]);
+  ensureString(config.language);
+  ensureString(config.out);
 
   // Validate options
-  let names=[];
-  let labels=[];
-  let options=config.options || [];
-  for(var a in options){
-    let option=options[a];
-    if(!option.label) throw new Error("Unlabeled option");
-    if(typeof(option.label)!="string") throw new Error("Invalid label given");
-    if(labels.indexOf(option.label)<0) labels.push(option.label);
-    else throw new Error(`Multiple options with label "${option.label}"`);
-    if(option.names){
-      for(var b in option.names){
-        let name=option.names[b];
-        if(typeof(name)!="string") throw new Error("Invalid name given");
-        if(names.indexOf(name)<0) names.push(name);
-        else throw new Error(`Multiple instances of name "${name}"`);
+  if(config.options!=undefined){
+    ensureList(config.options,1);
+    for(var a in config.options){
+      let obj=config.options[a];
+      validateKeys(obj,["names","label"]);
+      ensureString(obj.label);
+      ensureList(obj.names,1);
+      for(var b in obj.names){
+        ensureString(obj.names[b]);
       }
     }
   }
 
   // Validate flags
-  labels=[];
-  let flags=config.flags || [];
-  for(var a in flags){
-    let flag=flags[a];
-    if(!flag.label) throw new Error("Unlabeled option");
-    if(typeof(flag.label)!="string") throw new Error("Invalid label given");
-    if(labels.indexOf(flag.label)<0) labels.push(flag.label);
-    else throw new Error(`Multiple options with label "${flag.label}"`);
-    if(flag.names){
-      for(var b in flag.names){
-        let name=flag.names[b];
-        if(typeof(name)!="string") throw new Error("Invalid name given");
-        if(names.indexOf(name)<0) names.push(name);
-        else throw new Error(`Multiple instances of name "${name}"`);
+  if(config.flags!=undefined){
+    ensureList(config.flags,1);
+    for(var a in config.flags){
+      let obj=config.flags[a];
+      validateKeys(obj,["names","label"]);
+      ensureString(obj.label);
+      ensureList(obj.names,1);
+      for(var b in obj.names){
+        ensureString(obj.names[b]);
       }
     }
   }
 
   // Validate args
   if(config.parameters!=undefined){
+    validateKeys(config.parameters,[],["min","max"]);
     if(config.parameters.max==undefined) config.parameters.max=undefined;
     if(config.parameters.min==undefined) config.parameters.min=undefined;
   }else config.parameters={max:undefined,min:undefined};

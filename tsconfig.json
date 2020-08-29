@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module":"commonjs",
+    "noImplicitAny":false,
+    "removeComments":true,
+    "preserveConstEnums":true,
+    "sourceMap":true,
+    "allowJs":true,
+    "outDir":"bin",
+    "typeRoots":[
+      "./node_modules/@types"
+    ]
+  },
+  "files":[
+    "src/index.ts"
+  ]
+}

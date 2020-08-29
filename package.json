@@ -1,0 +1,26 @@
+{
+  "name": "argzilla",
+  "version": "1.0.0",
+  "description": "A codegen tool for parsing command line arguments",
+  "main": "index.js",
+  "scripts": {
+    "test": "node bin/index.js -p",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alugocp/argzilla.git"
+  },
+  "author": "LugoCorp, LLC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alugocp/argzilla/issues"
+  },
+  "homepage": "https://github.com/alugocp/argzilla#readme",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "@types/node": "^14.6.2"
+  }
+}

@@ -1,11 +1,11 @@
 // Validates Argzilla inputs with regex
 
-function validate(config){
+export default function validate(config){
 
   // Validate required fields
   let keys=Object.keys(config);
-  if(keys.indexOf("language")<0) throw new Error("Must specify language in config file");
-  if(keys.indexOf("out")<0) throw new Error("Must specify out in config file");
+  if(keys.indexOf("language")<0) throw new Error("Must specify \"language\" in config file");
+  if(keys.indexOf("out")<0) throw new Error("Must specify \"out\" in config file");
 
   // Validate options
   let names=[];
@@ -45,6 +45,10 @@ function validate(config){
       }
     }
   }
-}
 
-module.exports=validate;
+  // Validate args
+  if(config.parameters!=undefined){
+    if(config.parameters.max==undefined) config.parameters.max=undefined;
+    if(config.parameters.min==undefined) config.parameters.min=undefined;
+  }else config.parameters={max:undefined,min:undefined};
+}

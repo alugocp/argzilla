@@ -4,7 +4,8 @@
   "description": "A codegen tool for parsing command line arguments",
   "main": "index.js",
   "scripts": {
-    "test": "node bin/index.js -p",
+    "run": "node bin/index.js -p",
+    "test":"./test",
     "build": "tsc"
   },
   "repository": {

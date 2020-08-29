@@ -1,0 +1,27 @@
+{
+  "language":"javascript",
+  "out":"argparse1.js",
+  "parameters":{
+    "max":1
+  },
+  "flags":[
+    {
+      "label":"print",
+      "names":["-p","--print"]
+    }
+  ],
+  "options":[
+    {
+      "label":"out",
+      "names":["-o"]
+    },
+    {
+      "label":"in",
+      "names":["-f"]
+    },
+    {
+      "label":"lang",
+      "names":["-l"]
+    }
+  ]
+}

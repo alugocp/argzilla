@@ -10,7 +10,8 @@ A simple argparse generator developed by LugoCorp
 ## Building
 This repository comes with a couple of npm commands for building and testing.
 - `npm run build` - build the TypeScript code
-- `npm run test` - run the built code
+- `npm run test` - run the testing script
+- `npm run run` - run the built code
 
 ## Basic algorithm
 `program [command] [flags | options | args]`

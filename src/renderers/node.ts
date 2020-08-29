@@ -7,6 +7,7 @@ export default class NodeRenderer extends Renderer{
     let code=`// ${Strings.disclaimer}\n`;
     code+="module.exports=function(){\n";
     code+="\tlet argbox={options:{},flags:{},args:[]};\n";
+    code+="\tlet params=process.argv;\n";
     code+="\tlet start=2;\n";
     code+=this.loopNode(children);
     if(minargs!=undefined){
@@ -22,8 +23,8 @@ export default class NodeRenderer extends Renderer{
   }
   loopNode(children:string[]):string{
     if(!children.length) return "";
-    let code="\tfor(var a=start;a<process.argv.length;a++){\n";
-    code+="\t\tlet param=process.argv[a];\n";
+    let code="\tfor(var a=start;a<params.length;a++){\n";
+    code+="\t\tlet param=params[a];\n";
     for(var a in children) code+=children[a];
     code+="\t}\n";
     return code;
@@ -42,8 +43,8 @@ export default class NodeRenderer extends Renderer{
     let code="";
     for(var a in option.names){
       code+=`\t\tif(param==\"${option.names[a]}\"){\n`;
-      code+=`\t\t\tif(a<process.argv.length-1){\n`;
-      code+=`\t\t\t\targbox.options.${option.label}=process.argv[++a];\n`;
+      code+=`\t\t\tif(a<params.length-1){\n`;
+      code+=`\t\t\t\targbox.options.${option.label}=params[++a];\n`;
       code+="\t\t\t\tcontinue;\n";
       code+="\t\t\t}else{\n";
       code+=`\t\t\t\tthrow new Error(\"${Strings.missing_option(option.names[a])}\");\n`;

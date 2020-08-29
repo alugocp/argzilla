@@ -22,6 +22,7 @@ This repository comes with a couple of npm commands for building and testing.
   - Anything else is an arg
 
 ## Targets
+#### Phase 1
 - [ ] JavaScript
 - [ ] Python
 - [ ] Bash
@@ -30,6 +31,14 @@ This repository comes with a couple of npm commands for building and testing.
 - [ ] C++
 - [ ] Lua
 
+#### Phase 2
+- [ ] Golang
+- [ ] OCaml
+- [ ] Rust
+- [ ] Dart
+- [ ] PHP
+- [ ] C#
+- [ ] R
 
 ## Nodes
 Argzilla is a partial evaluator, so it basically produces some code attuned to a config input (your argzilla.json file). Partial evaluators also input some source code (which they have to parse into an AST), but Argzilla skips directly to the AST. Well actually it isn't ever stored as a tree, but conceptually this is how we view it to help keep the interface consistent across renderers.

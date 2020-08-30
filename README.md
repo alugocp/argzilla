@@ -16,8 +16,8 @@ This repository comes with a couple of npm commands for building and testing.
 ## Basic algorithm
 `program [command] [flags | options | args]`
 
-- For each input argument
-  - Check for command
+- Check for command
+- For each remaining parameter
   - Check against flags
   - Check against options
   - Anything else is an arg

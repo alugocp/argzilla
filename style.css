@@ -1,0 +1,72 @@
+.btn {
+  background-color: #459ba0;
+  color: white;
+  font-size: 16px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: black;
+  color: white;
+}
+
+  table,td{
+  border:2px solid black;
+  color: white;
+  text-align: center;
+  }
+
+  table,th{
+  border:2px solid black;
+  text-align: center;
+
+}
+
+  table{
+    border-collapse:collapse;
+    width:40%;
+    color:black;
+  }
+
+  td{
+    height:50px;
+  }
+  #557f88
+  {
+    background-color: 557f88;
+  }
+  #black
+  {
+    background-color: 000000;
+  }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+iframe {
+    width:50%;
+    float:right;
+}
+
+.clear {
+    clear:both;
+}
+
+div.ex1 {
+  overflow: scroll;
+}
+
+.img-container {
+        text-align: center;
+      }
+
+section {
+  background-color: #557f88;
+}

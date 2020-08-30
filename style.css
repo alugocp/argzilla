@@ -1,18 +1,23 @@
-.btn {
-  background-color: #459ba0;
-  color: white;
-  font-size: 16px;
-  padding: 16px 30px;
-  border: none;
-  cursor: pointer;
-  border-radius: 16px;
-  text-align: center;
+
+/* General */
+:root{
+  --black:#000000;
+  --white:#ffffff;
+  --blue:#459ba0;
+}
+body{
+  overflow-x:hidden;
+  padding:0;
+  margin:0;
+}
+.center{
+  text-align:center;
 }
 
-.btn:hover {
-  background-color: black;
-  color: white;
-}
+
+
+
+
 
   table,td{
   border:2px solid black;
@@ -35,20 +40,7 @@
   td{
     height:50px;
   }
-  #557f88
-  {
-    background-color: 557f88;
-  }
-  #black
-  {
-    background-color: 000000;
-  }
 
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 iframe {
     width:50%;
@@ -69,4 +61,44 @@ div.ex1 {
 
 section {
   background-color: #557f88;
+}
+
+
+
+
+/* Documentation button */
+.docs-btn{
+  transition:background-color 0.1s ease;
+  background-color:var(--blue);
+  border-radius:36px;
+  text-align:center;
+  padding:16px 75px;
+  font-weight:bold;
+  font-size:40px;
+  cursor:pointer;
+  border:none;
+  color:white;
+}
+
+.docs-btn:hover{
+  background-color:black;
+}
+
+/* Donate/contact section */
+.donate-contact{
+  grid-template-columns:50% 50%;
+  text-align:center;
+  display:grid;
+}
+.donate-contact .donate{
+  background-color:var(--black);
+  color:var(--white);
+}
+.donate-contact .contact{
+  background-color:var(--blue);
+}
+.donate-contact .contact-icons{
+  grid-template-columns:50% 50%;
+  text-align:center;
+  display:grid;
 }

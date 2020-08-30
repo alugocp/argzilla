@@ -1,6 +1,6 @@
 #!/bin/bash
 
-langs=("javascript" "ruby" "python")
+langs=("javascript" "ruby" "python" "cpp")
 
 # Build the project
 printf "Building..."
@@ -14,31 +14,35 @@ printf "Build complete\n"
 out="bin/argparse.txt"
 configs=( $(ls tests) )
 for config in "${configs[@]}"; do
-  printf "\nTesting ${config}\n"
+  printf "\n\u001b[4mTesting ${config}\u001b[0m\n"
   for lang in "${langs[@]}"; do
-    printf "${lang}: "
+    printf "\u001b[1m${lang}\u001b[0m: "
     node bin/index.js -l "$lang" -p > $out
     if [ "$?" == "0" ]; then
-      printf "GENERATED, "
+      printf "\u001b[32mGENERATED\u001b[0m, "
 
       # Language-specific testing
       if [ "$lang" == "javascript" ]; then
         nodejs "$out"
-        [ "$?" == "0" ] && printf "RUNS" || printf "ERROR"
+        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
       elif [ "$lang" == "ruby" ]; then
         ruby "$out"
-        [ "$?" == "0" ] && printf "RUNS" || printf "ERROR"
+        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
       elif [ "$lang" == "python" ]; then
         python "$out"
-        [ "$?" == "0" ] && printf "RUNS" || printf "ERROR"
+        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
+      elif [ "$lang" == "cpp" ]; then
+        cp "$out" bin/test.cpp
+        g++ -Wall -c bin/test.cpp -o bin/a.o
+        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
       else
-        printf "UNKNOWN"
+        printf "\u001b[31mUNKNOWN\u001b[0m"
       fi
       # End of language-specific testing
 
       printf "\n"
     else
-      printf "ERROR\n"
+      printf "\u001b[31mERROR\u001b[0m\n"
     fi
   done
 done

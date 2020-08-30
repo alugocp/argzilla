@@ -1,7 +1,9 @@
 
 export default abstract class Renderer{
+  private config=null;
 
   render(config):string{
+    this.config=config;
     let children=[];
     let start=0;
     if(config.commands!=undefined){
@@ -21,9 +23,6 @@ export default abstract class Renderer{
     ],start));
     return this.initNode(children,config.parameters.min);
   }
-  extraIndent(input:string):string{
-    return input.split("\n").map(x => x.length?`\t${x}`:x).join("\n");
-  }
 
   // Node functions
   protected abstract initNode(children:string[],minargs?:number):string;
@@ -32,4 +31,25 @@ export default abstract class Renderer{
   protected abstract flagNode(flag):string;
   protected abstract optionNode(option):string;
   protected abstract argNode(maxargs?:number):string;
+
+  // Render helpers
+  extraIndent(input:string):string{
+    return input.split("\n").map(x => x.length?`\t${x}`:x).join("\n");
+  }
+  aggregateFlagLabels(){
+    let lst=[];
+    for(var a in (this.config.flags || [])) lst.push(this.config.flags[a].label);
+    for(var a in (this.config.commands || [])){
+      for(var b in (this.config.commands[a].flags || [])) lst.push(this.config.commands[a].flags[b].label);
+    }
+    return lst;
+  }
+  aggregateOptionLabels(){
+    let lst=[];
+    for(var a in (this.config.options || [])) lst.push(this.config.options[a].label);
+    for(var a in (this.config.commands || [])){
+      for(var b in (this.config.commands[a].options || [])) lst.push(this.config.commands[a].options[b].label);
+    }
+    return lst;
+  }
 }

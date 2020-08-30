@@ -1,0 +1,11 @@
+{
+  "language":"javascript",
+  "out":"argparse1.js",
+  "commands":{
+    "testing123":{
+      "parameters":{
+        "min":1
+      }
+    }
+  }
+}

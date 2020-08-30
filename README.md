@@ -29,7 +29,7 @@ This repository comes with a couple of npm commands for building and testing.
 - [ ] Bash
 - [x] Ruby
 - [ ] Java
-- [ ] C++
+- [x] C++
 - [ ] Lua
 
 #### Phase 2

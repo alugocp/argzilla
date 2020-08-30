@@ -25,7 +25,7 @@ This repository comes with a couple of npm commands for building and testing.
 ## Targets
 #### Phase 1
 - [x] JavaScript
-- [ ] Python
+- [x] Python
 - [ ] Bash
 - [x] Ruby
 - [ ] Java

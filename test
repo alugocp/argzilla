@@ -1,6 +1,6 @@
 #!/bin/bash
 
-langs=("javascript" "ruby")
+langs=("javascript" "ruby" "python")
 
 # Build the project
 printf "Building..."
@@ -20,15 +20,22 @@ for config in "${configs[@]}"; do
     node bin/index.js -l "$lang" -p > $out
     if [ "$?" == "0" ]; then
       printf "GENERATED, "
+
+      # Language-specific testing
       if [ "$lang" == "javascript" ]; then
         nodejs "$out"
         [ "$?" == "0" ] && printf "RUNS" || printf "ERROR"
       elif [ "$lang" == "ruby" ]; then
         ruby "$out"
         [ "$?" == "0" ] && printf "RUNS" || printf "ERROR"
+      elif [ "$lang" == "python" ]; then
+        python "$out"
+        [ "$?" == "0" ] && printf "RUNS" || printf "ERROR"
       else
         printf "UNKNOWN"
       fi
+      # End of language-specific testing
+
       printf "\n"
     else
       printf "ERROR\n"

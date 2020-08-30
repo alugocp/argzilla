@@ -1,3 +1,4 @@
+import PythonRenderer from "./renderers/python";
 import NodeRenderer from "./renderers/node";
 import RubyRenderer from "./renderers/ruby";
 let argparse=require("./argparse.js");
@@ -26,7 +27,8 @@ if(result.command=="init"){
 let r:Renderer=null;
 let lang=result.options.lang || config.language;
 if(lang=="javascript") r=new NodeRenderer();
-if(lang=="ruby") r=new RubyRenderer();
+else if(lang=="python") r=new PythonRenderer();
+else if(lang=="ruby") r=new RubyRenderer();
 if(!r) throw new Error(`Invalid language ${lang} selected`);
 
 // Write output

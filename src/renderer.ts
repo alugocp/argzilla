@@ -21,6 +21,9 @@ export default abstract class Renderer{
     ],start));
     return this.initNode(children,config.parameters.min);
   }
+  extraIndent(input:string):string{
+    return input.split("\n").map(x => x.length?`\t${x}`:x).join("\n");
+  }
 
   // Node functions
   protected abstract initNode(children:string[],minargs?:number):string;

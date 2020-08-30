@@ -4,6 +4,7 @@
   --black:#000000;
   --white:#ffffff;
   --blue:#459ba0;
+  --dark:#557f88;
 }
 body{
   overflow-x:hidden;
@@ -60,7 +61,7 @@ div.ex1 {
       }
 
 section {
-  background-color: #557f88;
+  background-color: var(--blue);
 }
 
 
@@ -81,21 +82,21 @@ section {
 }
 
 .docs-btn:hover{
-  background-color:black;
+  background-color:var(--dark);
 }
 
 /* Donate/contact section */
 .donate-contact{
   grid-template-columns:50% 50%;
+  color:var(--white);
   text-align:center;
   display:grid;
 }
 .donate-contact .donate{
   background-color:var(--black);
-  color:var(--white);
 }
 .donate-contact .contact{
-  background-color:var(--blue);
+  background-color:var(--dark);
 }
 .donate-contact .contact-icons{
   grid-template-columns:50% 50%;

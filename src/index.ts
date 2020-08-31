@@ -1,6 +1,7 @@
 import PythonRenderer from "./renderers/python";
 import NodeRenderer from "./renderers/node";
 import RubyRenderer from "./renderers/ruby";
+import LuaRenderer from "./renderers/lua";
 import CppRenderer from "./renderers/cpp";
 let argparse=require("./argparse.js");
 import Renderer from "./renderer";
@@ -30,6 +31,7 @@ let lang=result.options.lang || config.language;
 if(lang=="javascript") r=new NodeRenderer();
 else if(lang=="python") r=new PythonRenderer();
 else if(lang=="ruby") r=new RubyRenderer();
+else if(lang=="lua") r=new LuaRenderer();
 else if(lang=="cpp") r=new CppRenderer();
 if(!r) throw new Error(`Invalid language ${lang} selected`);
 

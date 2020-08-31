@@ -30,7 +30,7 @@ This repository comes with a couple of npm commands for building and testing.
 - [x] Ruby
 - [ ] Java
 - [x] C++
-- [ ] Lua
+- [x] Lua
 
 #### Phase 2
 - [ ] Golang

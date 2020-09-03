@@ -1,6 +1,6 @@
 #!/bin/bash
 
-langs=("javascript" "ruby" "python" "cpp" "lua")
+langs=("javascript" "ruby" "python" "cpp" "lua" "java")
 
 # Build the project
 printf "Building..."
@@ -37,6 +37,9 @@ for config in "${configs[@]}"; do
         [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
       elif [ "$lang" == "lua" ]; then
         lua5.3 "$out"
+        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
+      elif [ "$lang" == "java" ]; then
+        javac "$out"
         [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
       else
         printf "\u001b[31mUNKNOWN\u001b[0m"

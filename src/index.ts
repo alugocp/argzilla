@@ -1,4 +1,5 @@
 import PythonRenderer from "./renderers/python";
+import JavaRenderer from "./renderers/java";
 import NodeRenderer from "./renderers/node";
 import RubyRenderer from "./renderers/ruby";
 import LuaRenderer from "./renderers/lua";
@@ -30,6 +31,7 @@ let r:Renderer=null;
 let lang=result.options.lang || config.language;
 if(lang=="javascript") r=new NodeRenderer();
 else if(lang=="python") r=new PythonRenderer();
+else if(lang=="java") r=new JavaRenderer();
 else if(lang=="ruby") r=new RubyRenderer();
 else if(lang=="lua") r=new LuaRenderer();
 else if(lang=="cpp") r=new CppRenderer();

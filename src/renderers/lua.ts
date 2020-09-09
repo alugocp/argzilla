@@ -3,6 +3,8 @@ import Strings from "../strings";
 
 export default class LuaRenderer extends Renderer{
 
+  continue_counter=0
+
   initNode(children:string[],minargs?:number):string{
     let code=`-- ${Strings.disclaimer}\n`;
     code+="function argparse()\n";
@@ -33,6 +35,7 @@ export default class LuaRenderer extends Renderer{
     let code=`\tfor a=${start},(table.getn(params)-1) do\n`;
     code+="\t\tparam=params[a]\n";
     for(var a in children) code+=children[a];
+    code+=`\t\t::continue${this.continue_counter++}::\n`
     code+="\tend\n";
     return code;
   }
@@ -40,8 +43,8 @@ export default class LuaRenderer extends Renderer{
     let code="";
     for(var a in flag.names){
       code+=`\t\tif param==\"${flag.names[a]}\" then\n`;
-      code+=`\t\t\targbox.flags.${flag.label}=true\n`;
-      code+="\t\t\tcontinue\n";
+      code+=`\t\t\targbox.flags[\"${flag.label}\"]=true\n`;
+      code+=`\t\t\tgoto continue${this.continue_counter}\n`;
       code+="\t\tend\n";
     }
     return code;
@@ -51,9 +54,9 @@ export default class LuaRenderer extends Renderer{
     for(var a in option.names){
       code+=`\t\tif param==\"${option.names[a]}\" then\n`;
       code+=`\t\t\tif a<table.getn(params)-1 then\n`;
-      code+=`\t\t\t\targbox.options.${option.label}=params[a+1]\n`;
+      code+=`\t\t\t\targbox.options[\"${option.label}\"]=params[a+1]\n`;
       code+="\t\t\t\ta=a+1\n";
-      code+="\t\t\t\tcontinue\n";
+      code+=`\t\t\t\tgoto continue${this.continue_counter}\n`;
       code+="\t\t\telse\n";
       code+=`\t\t\t\terror(\"${Strings.missing_option(option.names[a])}\")\n`;
       code+="\t\t\tend\n";

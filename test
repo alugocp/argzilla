@@ -1,8 +1,10 @@
 #!/bin/bash
 
-langs=("javascript" "ruby" "python" "cpp" "lua" "java")
+langs=("javascript" "ruby" "python" "cpp" "lua" "java" "bash")
 
 # Build the project
+rm -rf bin
+mkdir bin
 printf "Building..."
 tsc 2> /dev/null
 if [ "$?" != "0" ]; then
@@ -42,6 +44,9 @@ for config in "${configs[@]}"; do
         jout="bin/argparse.java"
         cp "$out" "$jout"
         javac "$jout"
+        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
+      elif [ "$lang" == "bash" ]; then
+        bash "$out"
         [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
       else
         printf "\u001b[31mUNKNOWN\u001b[0m"

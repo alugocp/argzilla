@@ -28,7 +28,7 @@ This repository comes with a couple of npm commands for building and testing.
 - [x] Python
 - [ ] Bash
 - [x] Ruby
-- [ ] Java
+- [x] Java
 - [x] C++
 - [x] Lua
 

@@ -1,7 +1,7 @@
-import Renderer from "../renderer";
+import {Renderer} from "../renderer";
 import Strings from "../strings";
 
-export default class CppRenderer extends Renderer{
+export class CppRenderer extends Renderer{
 
   initNode(children:string[],minargs?:number):string{
     let code=`// ${Strings.disclaimer}\n`;

@@ -1,7 +1,7 @@
-import Renderer from "../renderer";
+import {Renderer} from "../renderer";
 import Strings from "../strings";
 
-export default class BashRenderer extends Renderer{
+export class BashRenderer extends Renderer{
 
   initNode(children:string[],minargs?:number):string{
     let code=`# ${Strings.disclaimer}\n`;

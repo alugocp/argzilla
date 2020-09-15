@@ -2,12 +2,16 @@
   "name": "argzilla",
   "version": "1.0.0",
   "description": "A codegen tool for parsing command line arguments",
-  "main": "index.js",
   "scripts": {
-    "run": "node bin/index.js -p",
-    "test":"./test",
+    "start": "node bin/index.js -p",
+    "test": "./test",
     "build": "tsc"
   },
+  "bin": {
+    "argzilla": "./cli.js"
+  },
+  "main": "bin/index.js",
+  "prepare": "tsc",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alugocp/argzilla.git"

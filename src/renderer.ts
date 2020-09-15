@@ -1,5 +1,5 @@
 
-export default abstract class Renderer{
+export abstract class Renderer{
   private config=null;
 
   render(config):string{

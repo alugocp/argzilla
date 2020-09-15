@@ -1,7 +1,7 @@
-import Renderer from "../renderer";
+import {Renderer} from "../renderer";
 import Strings from "../strings";
 
-export default class LuaRenderer extends Renderer{
+export class LuaRenderer extends Renderer{
 
   continue_counter=0
 

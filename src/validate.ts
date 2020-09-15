@@ -53,7 +53,7 @@ function validateArgs(config){
   }else config.parameters={max:undefined,min:undefined};
 }
 
-export default function validate(config){
+export function validate(config){
 
   // Top-level validation
   validateKeys(config,["language","out"],["parameters","options","flags","commands"]);

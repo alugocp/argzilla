@@ -3,19 +3,19 @@
 function validateKeys(obj,required:string[],optional?:string[]){
   let keys=Object.keys(obj);
   for(var a in required){
-    if(keys.indexOf(required[a])<0) throw new Error(`Missing key \"${required[a]}\"`);
+    if(keys.indexOf(required[a])<0) error(`Missing key \"${required[a]}\"`);
     keys.splice(keys.indexOf(required[a]),1);
   }
   for(var a in keys){
-    if(optional.indexOf(keys[a])<0) throw new Error(`Unknown key \"${keys[a]}\"`);
+    if(optional.indexOf(keys[a])<0) error(`Unknown key \"${keys[a]}\"`);
   }
 }
 function ensureList(obj,l?:number){
-  if(!(typeof(obj)=="object" && obj.length!=undefined)) throw new Error("Invalid type (list expected)");
-  if(l!=undefined && obj.length<l)throw new Error(`Too few arguments (At least ${l} expected)`);
+  if(!(typeof(obj)=="object" && obj.length!=undefined)) error("Invalid type (list expected)");
+  if(l!=undefined && obj.length<l) error(`Too few arguments (At least ${l} expected)`);
 }
 function ensureString(obj){
-  if(typeof(obj)!="string") throw new Error("Invalid type (string expected)");
+  if(typeof(obj)!="string") error("Invalid type (string expected)");
 }
 function validateOptions(config){
   if(config.options!=undefined){
@@ -53,6 +53,10 @@ function validateArgs(config){
   }else config.parameters={max:undefined,min:undefined};
 }
 
+export function error(msg){
+  process.stdout.write(`\u001b[41m\u001b[37;1mArgzilla\u001b[0m ${msg}\n`);
+  process.exit(1);
+}
 export function validate(config){
 
   // Top-level validation

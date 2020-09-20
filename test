@@ -1,61 +1,87 @@
 #!/bin/bash
+command="argzilla"
+args1=( "-p" "-l" "ruby" "yo" "sup" )
 
-langs=("javascript" "ruby" "python" "cpp" "lua" "java" "bash")
+function print_result {
+  if [ "$1" == "0" ]; then
+    printf "\u001b[32mSuccess\u001b[0m\n"
+  else
+    printf "\u001b[31mFailure\u001b[0m\n"
+  fi
+}
 
-# Build the project
-rm -rf bin
-mkdir bin
-printf "Building..."
-tsc 2> /dev/null
-if [ "$?" != "0" ]; then
-  printf "Build failed\n"
-  exit 1
-fi
-printf "Build complete\n"
+# Testing Bash
+printf "\u001b[4mBash\u001b[0m\n"
+$command -p -l bash > tests/argparse.sh
+printf "No args..."
+bash tests/test.sh > /dev/null 2>&1
+print_result $?
+printf "Args 1..."
+bash tests/test.sh ${args1[@]} > /dev/null 2>&1
+print_result $?
+rm tests/argparse.sh
+echo ""
 
-out="bin/argparse.txt"
-configs=( $(ls tests) )
-for config in "${configs[@]}"; do
-  printf "\n\u001b[4mTesting ${config}\u001b[0m\n"
-  for lang in "${langs[@]}"; do
-    printf "\u001b[1m${lang}\u001b[0m: "
-    node bin/index.js -l "$lang" -p > $out
-    if [ "$?" == "0" ]; then
-      printf "\u001b[32mGENERATED\u001b[0m, "
+# Testing C++
+printf "\u001b[4mC++\u001b[0m\n"
+$command -p -l cpp > tests/argparse.cpp
+g++ tests/test.cpp -o tests/a.out
+printf "No args..."
+{ ./tests/a.out; } 2> /dev/null
+print_result $?
+printf "Args 1..."
+{ ./tests/a.out ${args1[@]}; } 2> /dev/null
+print_result $?
+rm tests/argparse.cpp tests/a.out
+echo ""
 
-      # Language-specific testing
-      if [ "$lang" == "javascript" ]; then
-        nodejs "$out"
-        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
-      elif [ "$lang" == "ruby" ]; then
-        ruby "$out"
-        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
-      elif [ "$lang" == "python" ]; then
-        python "$out"
-        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
-      elif [ "$lang" == "cpp" ]; then
-        cp "$out" bin/test.cpp
-        g++ -w -c bin/test.cpp -o bin/a.o
-        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
-      elif [ "$lang" == "lua" ]; then
-        lua5.3 "$out"
-        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
-      elif [ "$lang" == "java" ]; then
-        jout="bin/argparse.java"
-        cp "$out" "$jout"
-        javac "$jout"
-        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
-      elif [ "$lang" == "bash" ]; then
-        bash "$out"
-        [ "$?" == "0" ] && printf "\u001b[32mRUNS\u001b[0m" || printf "\u001b[31mERROR\u001b[0m"
-      else
-        printf "\u001b[31mUNKNOWN\u001b[0m"
-      fi
-      # End of language-specific testing
+# Testing Java
+printf "\u001b[4mJava\u001b[0m\n"
+echo ""
 
-      printf "\n"
-    else
-      printf "\u001b[31mERROR\u001b[0m\n"
-    fi
-  done
-done
+# Testing Lua
+printf "\u001b[4mLua\u001b[0m\n"
+$command -p -l lua > tests/argparse.lua
+printf "No args..."
+lua5.3 tests/test.lua > /dev/null 2>&1
+print_result $?
+printf "Args 1..."
+lua5.3 tests/test.lua ${args1[@]} > /dev/null 2>&1
+print_result $?
+rm tests/argparse.lua
+echo ""
+
+# Testing Node.js
+printf "\u001b[4mNode.js\u001b[0m\n"
+$command -p -l node > tests/argparse.js
+printf "No args..."
+nodejs tests/test.js > /dev/null 2>&1
+print_result $?
+printf "Args 1..."
+nodejs tests/test.js ${args1[@]} > /dev/null 2>&1
+print_result $?
+rm tests/argparse.js
+echo ""
+
+# Testing Python
+printf "\u001b[4mPython\u001b[0m\n"
+$command -p -l python > tests/argparse.py
+printf "No args..."
+python tests/test.py > /dev/null 2>&1
+print_result $?
+printf "Args 1..."
+python tests/test.py ${args1[@]} > /dev/null 2>&1
+print_result $?
+rm tests/argparse.py
+echo ""
+
+# Testing Ruby
+printf "\u001b[4mRuby\u001b[0m\n"
+$command -p -l ruby > tests/argparse.rb
+printf "No args..."
+ruby tests/test.rb > /dev/null 2>&1
+print_result $?
+printf "Args 1..."
+ruby tests/test.rb ${args1[@]} > /dev/null 2>&1
+print_result $?
+rm tests/argparse.rb

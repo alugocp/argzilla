@@ -3,3 +3,6 @@ node_modules
 argparse1.js
 *.tgz
 bin
+
+tests/*
+!tests/test.*

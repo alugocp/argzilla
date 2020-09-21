@@ -11,73 +11,79 @@ body{
   padding:0;
   margin:0;
 }
-
+hr{
+  margin:35px 0;
+}
 .center{
   text-align:center;
 }
-
-table,td{
-  border:2px solid black;
-  color: white;
-  text-align: center;
+.thirds{
+  grid-template-columns:33% 34% 33%;
+  text-align:center;
+  position:relative;
+  display:grid;
+}
+.thirds > div{
+  position:relative;
 }
 
-table,th{
-  border:2px solid black;
-  text-align: center;
+/* Splash */
+.splash{
+  background-color:var(--blue);
+}
+.splash .link{
+  transition:background-color 0.1s ease;
+  border:solid 2px var(--white);
+  background-color:var(--blue);
+  border-radius:0 27px 27px 0;
+  padding:10px 20px 10px 0;
+  position:relative;
+  border-left:none;
+  text-align:right;
+  font-size:30px;
+  width:325px;
+}
+.splash .link:hover{
+  background-color:var(--dark);
+}
+.splash .link a{
+  text-decoration:none;
+  color:var(--white);
+}
+.splash .logo{
+  margin:15px 0;
+  height:300px;
+}
+.splash h1{
+  color:var(--white);
+  font-size:85px;
+  margin:15px;
+}
+.splash .version{
+  color:var(--white);
+  font-weight:bold;
+  display:block;
+  margin:15px 0;
+}
+.splash .github{
+  width:85px;
 }
 
-table{
-  border-collapse:collapse;
-  width:40%;
-  color:black;
+/* What is Argzilla */
+.what-argzilla{
+  position:relative;
+  padding:0 40px;
 }
-
-td{
-  height:50px;
-}
-
-
-iframe {
-  width:50%;
+.video{
+  position:relative;
   float:right;
+  padding-left:40px;
 }
 
-.clear {
-  clear:both;
+/* Documentation */
+.documentation{
+  padding:0 40px;
 }
-
-div.ex1 {
-  overflow: scroll;
-}
-
-.img-container {
-  text-align: center;
-}
-
-section {
-  background-color: var(--blue);
-}
-
-
-/* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 32%;
-  padding: 10px;
-  height: 250px;
-  text-align: center;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-
-/* Documentation button */
 .docs-btn{
   transition:background-color 0.1s ease;
   background-color:var(--blue);
@@ -90,9 +96,17 @@ section {
   border:none;
   color:white;
 }
-
 .docs-btn:hover{
   background-color:var(--dark);
+}
+
+/* Who's using it */
+.whos-using-it{
+  padding-bottom:50px;
+}
+.whos-using-it h1{
+  margin-bottom:35px;
+  padding-left:40px;
 }
 
 /* Donate/contact section */
@@ -106,7 +120,7 @@ section {
   background-color:var(--black);
 }
 .donate-contact .contact{
-  background-color:var(--dark);
+  background-color:var(--blue);
 }
 .donate-contact .contact-icons{
   grid-template-columns:50% 50%;

@@ -9,45 +9,42 @@ body{
   font-family: sans-serif;
   overflow-x:hidden;
   padding:0;
-  margin: 40px;
+  margin:0;
 }
-
 
 .center{
   text-align:center;
 }
 
-
-  table,td{
+table,td{
   border:2px solid black;
   color: white;
   text-align: center;
-  }
-
-  table,th{
-  border:2px solid black;
-  text-align: center;
-
 }
 
-  table{
-    border-collapse:collapse;
-    width:40%;
-    color:black;
-  }
+table,th{
+  border:2px solid black;
+  text-align: center;
+}
 
-  td{
-    height:50px;
-  }
+table{
+  border-collapse:collapse;
+  width:40%;
+  color:black;
+}
+
+td{
+  height:50px;
+}
 
 
 iframe {
-    width:50%;
-    float:right;
+  width:50%;
+  float:right;
 }
 
 .clear {
-    clear:both;
+  clear:both;
 }
 
 div.ex1 {
@@ -55,8 +52,8 @@ div.ex1 {
 }
 
 .img-container {
-        text-align: center;
-      }
+  text-align: center;
+}
 
 section {
   background-color: var(--blue);

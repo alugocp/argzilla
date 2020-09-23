@@ -1,5 +1,6 @@
 /* General */
 :root{
+  --light:#ececec;
   --black:#333333;
   --white:#ffffff;
   --blue:#459ba0;
@@ -34,15 +35,6 @@ a:hover{
 }
 .thirds > div{
   position:relative;
-}
-@font-face{
-  font-family:"Poppins";
-  src:url("./fonts/Poppins-Regular.ttf");
-}
-@font-face{
-  font-family:"Poppins";
-  src:url("./fonts/Poppins-Bold.ttf");
-  font-weight:bold;
 }
 
 /* Splash */
@@ -143,7 +135,8 @@ a:hover{
 .docs-btn{
   transition:background-color 0.1s ease;
   background-color:var(--blue);
-  border-radius:36px;
+  display:inline-block;
+  border-radius:40px;
   text-align:center;
   padding:16px 75px;
   font-weight:bold;
@@ -154,6 +147,7 @@ a:hover{
 }
 .docs-btn:hover{
   background-color:var(--dark);
+  text-decoration:none;
 }
 @media only screen and (max-width:1100px){
   .documentation{
@@ -210,6 +204,69 @@ a:hover{
 @media only screen and (max-width:700px){
   .donate-contact{
     grid-template-columns:100%;
+  }
+}
+
+/* Header */
+.header{
+  background-color:var(--blue);
+  padding:5px;
+}
+.header a{
+  color:var(--white);
+}
+
+/* Generated interfaces */
+.interfaces{
+  padding:0 40px;
+}
+.interfaces-grid{
+  grid-template-columns:calc(50% - 15px) calc(50% - 15px);
+  grid-column-gap:30px;
+  display:grid;
+}
+.interfaces-grid > div{
+  background-color:var(--light);
+  padding:0 15px 25px 15px;
+  margin-bottom:30px;
+}
+.interfaces-grid h1{
+  text-decoration:underline;
+}
+.interfaces-grid .color{
+  color:var(--dark);
+}
+@media only screen and (max-width:1000px){
+  .interfaces{
+    padding:0 5px;
+  }
+  .interfaces-grid{
+    grid-template-columns:100%;
+    margin:0 5px;
+  }
+  .interfaces-grid > div{
+    margin-bottom:10px;
+  }
+}
+
+/* JSON config reference */
+.config-ref{
+  padding:0 40px;
+}
+.config-ref p{
+  margin-top:0;
+}
+.config-ref h2{
+  margin-bottom:0;
+}
+.config-ref h2 span{
+  font-weight:normal;
+  color:var(--dark);
+  font-size:18px;
+}
+@media only screen and (max-width:1000px){
+  .config-ref{
+    padding:0 5px;
   }
 }
 

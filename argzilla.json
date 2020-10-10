@@ -1,6 +1,6 @@
 {
   "language":"node",
-  "out":"argparse1.js",
+  "out":"argparse.js",
   "parameters":{
     "max":0
   },
@@ -8,6 +8,10 @@
     {
       "label":"print",
       "names":["-p","--print"]
+    },
+    {
+      "label":"help",
+      "names":["--help"]
     }
   ],
   "options":[

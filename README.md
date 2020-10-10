@@ -1,74 +1,41 @@
 <img height="300" src="./res/argzilla.svg"/>
 
 # Argzilla
-A simple argparse generator developed by LugoCorp
+Argzilla is a simple argparse generation tool developed by LugoCorp. You can find out more about it on the [official website]().
 
-- Flags (no value passed in)
-- Options (you pass a value)
-- Commands
+Argzilla handles the following command line elements:
 
-## Building
-This repository comes with a couple of npm commands for building and testing.
-- `npm run build` - build the TypeScript code
-- `npm test` - run the testing script
-- `npm start` - run the built code
+- **Flags:**
+This is an element you can pass in and then check for its existence at runtime. Flags are either present or they are not.
 
-## Basic algorithm
-`program [command] [flags | options | args]`
+- **Options:**
+Options are like a flag but you assign a value to them from the command line. These values are always represented as a string at runtime.
 
-- Check for command
-- For each remaining parameter
-  - Check against flags
-  - Check against options
-  - Anything else is an arg
+- **Commands:**
+A command is the first element in an argument list (if it exists). It's a special word that tells your program specifically what the user wants to do. Git has commands like 'add' and 'commit'.
+
+## Usage
+```
+Argzilla command-line tool by LugoCorp
+
+Usage: argzilla [command] <options>
+
+Commands:
+  init  -  prints out a blank argzilla.json file
+
+Options:
+  -p, --print     Prints the output instead of writing to a file
+  -o file         Selects which file to write to
+  -f file         Selects an argzilla.json file to read from
+  -l lang         Selects which language to render in (python, node, ruby, bash, lua, cpp)
+  --help          Displays usage
+```
 
 ## Targets
-#### Phase 1
-- [x] JavaScript
-- [x] Python
-- [x] Bash
-- [x] Ruby
-- [x] Java
-- [x] C++
-- [x] Lua
-
-#### Phase 2
-- [ ] Golang
-- [ ] OCaml
-- [ ] Rust
-- [ ] Dart
-- [ ] PHP
-- [ ] C#
-- [ ] R
-
-## Nodes
-Argzilla is a partial evaluator, so it basically produces some code attuned to a config input (your argzilla.json file). Partial evaluators also input some source code (which they have to parse into an AST), but Argzilla skips directly to the AST. Well actually it isn't ever stored as a tree, but conceptually this is how we view it to help keep the interface consistent across renderers.
-### Init node
-```
-This is the entry node for Argzilla outputs. Yields a comment and function wrapper then checks for min arguments after visiting the inner nodes
-```
-
-### Command node
-```
-This node checks for commands if it exists. If there is a command then the loop node needs to start on the argument after it
-```
-
-### Loop node
-```
-This node accesses the command line arguments, provides a handle to them and houses the different param nodes
-```
-
-### Flag node
-```
-Sets a flag to true if the current parameter equals any label of that flag
-```
-
-### Option node
-```
-Sets an option to the next parameter if the current parameter equals any label of that option
-```
-
-### Arg node
-```
-Check for max arguments and then adds the current parameter to the arguments list
-```
+Argzilla can generate code in the following languages:
+- JavaScript
+- Python
+- Bash
+- Ruby
+- C++
+- Lua

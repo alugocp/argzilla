@@ -7,9 +7,26 @@ const fs=require("fs");
 let config=null;
 let result=argparse(process.argv);
 
+if(result.flags["help"]){
+  console.log("Argzilla command-line tool by LugoCorp");
+  console.log("");
+  console.log("Usage: argzilla [command] <options>");
+  console.log("");
+  console.log("Commands:");
+  console.log("  init  -  prints out a blank argzilla.json file");
+  console.log("");
+  console.log("Options:");
+  console.log("  -p, --print     Prints the output instead of writing to a file");
+  console.log("  -o file         Selects which file to write to");
+  console.log("  -f file         Selects an argzilla.json file to read from");
+  console.log("  -l lang         Selects which language to render in (python, node, ruby, bash, lua, cpp)");
+  console.log("  --help          Displays usage");
+  process.exit(0);
+}
+
 // Handle init
 if(result.command=="init"){
-  console.log(`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"parameters":{}\n\t"options":[],\n\t"flags":[],\n\t"commands":{}\n}`);
+  console.log(`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"parameters":{},\n\t"options":[],\n\t"flags":[],\n\t"commands":{}\n}`);
   process.exit(0);
 }
 

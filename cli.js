@@ -29,9 +29,9 @@ argzilla.validate(config);
 // Get renderer
 let r=null;
 let lang=result.options.lang || config.language;
-if(lang=="javascript") r=new argzilla.NodeRenderer();
-else if(lang=="python") r=new argzilla.PythonRenderer();
-else if(lang=="java") r=new argzilla.JavaRenderer();
+if(lang=="python") r=new argzilla.PythonRenderer();
+else if(lang=="node") r=new argzilla.NodeRenderer();
+//else if(lang=="java") r=new argzilla.JavaRenderer(); // INCOMPLETE
 else if(lang=="ruby") r=new argzilla.RubyRenderer();
 else if(lang=="bash") r=new argzilla.BashRenderer();
 else if(lang=="lua") r=new argzilla.LuaRenderer();

@@ -1,5 +1,5 @@
 {
-  "language":"javascript",
+  "language":"node",
   "out":"argparse1.js",
   "parameters":{
     "max":0

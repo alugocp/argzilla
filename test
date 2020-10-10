@@ -84,4 +84,4 @@ print_result $?
 printf "Args 1..."
 ruby tests/test.rb ${args1[@]} > /dev/null 2>&1
 print_result $?
-rm tests/argparse.rb
+#rm tests/argparse.rb

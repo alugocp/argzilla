@@ -11,7 +11,7 @@ export class NodeRenderer extends Renderer{
     code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif(argbox.args.length<${minargs}){\n`;
-      code+=`\t\t\tthrow new Error(\"${Strings.too_few_args}\");\n`;
+      code+=`\t\t\t//throw new Error(\"${Strings.too_few_args}\");\n`;
       code+="\t\t}\n";
     }
     code+="\treturn argbox;\n}\n";
@@ -20,10 +20,10 @@ export class NodeRenderer extends Renderer{
   commandNode(children:string[],i:number,name?:string):string{
     let code=null;
     if(i==0){
-      if(name) code=`\tif(params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
+      if(name) code=`\tif(params>2 && params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
       else code=this.loopNode(2,children);
     }else{
-      if(name) code=`\telse if(params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
+      if(name) code=`\telse if(params>2 && params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
       else code=`\telse{\n${this.loopNode(2,children)}\t}\n`;
     }
     return code;
@@ -54,7 +54,7 @@ export class NodeRenderer extends Renderer{
       code+=`\t\t\t\targbox.options.${option.label}=params[++a];\n`;
       code+="\t\t\t\tcontinue;\n";
       code+="\t\t\t}else{\n";
-      code+=`\t\t\t\tthrow new Error(\"${Strings.missing_option(option.names[a])}\");\n`;
+      code+=`\t\t\t\t//throw new Error(\"${Strings.missing_option(option.names[a])}\");\n`;
       code+="\t\t\t}\n";
       code+="\t\t}\n";
     }
@@ -63,11 +63,11 @@ export class NodeRenderer extends Renderer{
   argNode(maxargs?:number):string{
     let code="";
     if(maxargs==0){
-      code+=`\t\tthrow new Error(\"${Strings.too_many_args}\");\n`;
+      code+=`\t\t//throw new Error(\"${Strings.too_many_args}\");\n`;
     }else{
       if(maxargs!=undefined){
         code+=`\t\tif(argbox.args.length==${maxargs}){\n`;
-        code+=`\t\t\tthrow new Error(\"${Strings.too_many_args}\");\n`;
+        code+=`\t\t\t//throw new Error(\"${Strings.too_many_args}\");\n`;
         code+="\t\t}\n";
       }
       code+="\t\targbox.args.push(param);\n";

@@ -35,10 +35,10 @@ export class CppRenderer extends Renderer{
   commandNode(children:string[],i:number,name?:string):string{
     let code=null;
     if(i==0){
-      if(name) code=`\tif(!strcmp(argv[1],\"${name}\")){\n\t\targbox.command=new char[${name.length+1}];\n\t\tstrcpy(argbox.command,\"${name}\");\n${this.extraIndent(this.loopNode(2,children))}\t}\n`;
+      if(name) code=`\tif(argc>1 && !strcmp(argv[1],\"${name}\")){\n\t\targbox.command=new char[${name.length+1}];\n\t\tstrcpy(argbox.command,\"${name}\");\n${this.extraIndent(this.loopNode(2,children))}\t}\n`;
       else code=this.loopNode(1,children);
     }else{
-      if(name) code=`\telse if(!strcmp(argv[1],\"${name}\")){\n\t\targbox.command=new char[${name.length+1}];\n\t\tstrcpy(argbox.command,\"${name}\");\n${this.extraIndent(this.loopNode(2,children))}\t}\n`;
+      if(name) code=`\telse if(argc>1 && !strcmp(argv[1],\"${name}\")){\n\t\targbox.command=new char[${name.length+1}];\n\t\tstrcpy(argbox.command,\"${name}\");\n${this.extraIndent(this.loopNode(2,children))}\t}\n`;
       else code=`\telse{\n${this.extraIndent(this.loopNode(1,children))}\t}\n`;
     }
     return code;

@@ -11,7 +11,7 @@ export class RubyRenderer extends Renderer{
     code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif argbox[:args].length<${minargs} then\n`;
-      code+=`\t\t\traise \"${Strings.too_few_args}\"\n`;
+      code+=`\t\t\t# raise \"${Strings.too_few_args}\"\n`;
       code+="\t\tend\n";
     }
     code+="\treturn argbox\nend\n";
@@ -41,7 +41,7 @@ export class RubyRenderer extends Renderer{
     for(var a in flag.names){
       code+=`\t\tif param==\"${flag.names[a]}\" then\n`;
       code+=`\t\t\targbox[:flags][:${flag.label}]=true\n`;
-      code+="\t\t\tcontinue\n";
+      code+="\t\t\tnext\n";
       code+="\t\tend\n";
     }
     return code;
@@ -53,9 +53,9 @@ export class RubyRenderer extends Renderer{
       code+=`\t\t\tif a<params.length-1 then\n`;
       code+=`\t\t\t\targbox[:options][:${option.label}]=params[a+1]\n`;
       code+="\t\t\t\ta+=1\n";
-      code+="\t\t\t\tcontinue\n";
+      code+="\t\t\t\tnext\n";
       code+="\t\t\telse\n";
-      code+=`\t\t\t\traise \"${Strings.missing_option(option.names[a])}\"\n`;
+      code+=`\t\t\t\t# raise \"${Strings.missing_option(option.names[a])}\"\n`;
       code+="\t\t\tend\n";
       code+="\t\tend\n";
     }
@@ -64,11 +64,11 @@ export class RubyRenderer extends Renderer{
   argNode(maxargs?:number):string{
     let code="";
     if(maxargs==0){
-      code+=`\t\traise \"${Strings.too_many_args}\"\n`;
+      code+=`\t\t# raise \"${Strings.too_many_args}\"\n`;
     }else{
       if(maxargs!=undefined){
         code+=`\t\tif argbox[:args].length==${maxargs} then\n`;
-        code+=`\t\t\traise \"${Strings.too_many_args}\"\n`;
+        code+=`\t\t\t# raise \"${Strings.too_many_args}\"\n`;
         code+="\t\tend\n";
       }
       code+="\t\targbox[:args].push(param)\n";

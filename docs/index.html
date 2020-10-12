@@ -109,6 +109,20 @@
       <div>
         <h1>C++</h1>
         <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
+        <p>
+          <span class="color">typedef struct</span> {<br>
+            &emsp;<span class="color">char*</span> command=<span class="color">NULL</span> or some string;<br>
+            &emsp;<span class="color">Options</span> options;<br>
+            &emsp;<span class="color">Flags</span> flags;<br>
+            &emsp;<span class="color">std::vector&lt;char*&gt;</span> args;<br>
+          } <span class="color">ArgBox</span>;<br><br>
+          <span class="color">typedef struct</span> {<br>
+            &emsp;bools<br>
+          } <span class="color">Flags</span>;<br><br>
+          <span class="color">typedef struct</span> {<br>
+            &emsp;char pointers<br>
+          } <span class="color">Options</span>;
+        </p>
       </div>
       <!--<div>
         <h1>Java</h1>
@@ -116,23 +130,61 @@
       </div>-->
       <div>
         <h1>Python</h1>
-        <div>argparse()</div>
+        <div><span class="color">def</span> argparse()</div>
+        <p>
+          {<br>
+            &emsp;<span class="color">"command"</span>:<span class="color">None</span> or some string,<br>
+            &emsp;<span class="color">"options"</span>:{ strings },<br>
+            &emsp;<span class="color">"flags"</span>:{ booleans },<br>
+            &emsp;<span class="color">"args"</span>:[ strings ]<br>
+          }<br>
+        </p>
       </div>
       <div>
         <h1>Ruby</h1>
-        <div>argparse()</div>
+        <div><span class="color">def</span> argparse()</div>
+        <p>
+          {<br>
+            &emsp;<span class="color">:command</span> => <span class="color">nil</span> or some string,<br>
+            &emsp;<span class="color">:options</span> => { strings },<br>
+            &emsp;<span class="color">:flags</span> => { booleans },<br>
+            &emsp;<span class="color">:args</span> => [ strings ]<br>
+          }<br>
+        </p>
       </div>
       <div>
         <h1>Node.js</h1>
-        <div>argparse()</div>
+        <div><span class="color">function</span> argparse();</div>
+        <p>
+          {<br>
+            &emsp;<span class="color">command</span>:<span class="color">undefined</span> or some string,<br>
+            &emsp;<span class="color">options</span>:{ strings },<br>
+            &emsp;<span class="color">flags</span>:{ booleans },<br>
+            &emsp;<span class="color">args</span>:[ strings ]<br>
+          }<br>
+        </p>
       </div>
       <div>
         <h1>Bash</h1>
-        <div>argparse()</div>
+        <div><span class="color">function</span> argparse()</div>
+        <p>
+          argbox_command=<span class="color">0</span> or some string<br>
+          declare -A argbox_options <span class="color"># associative array with string values</span><br>
+          declare -A argbox_flags <span class="color"># associative array with 0 or 1 value</span><br>
+          argbox_args=( strings )<br>
+        </p>
       </div>
       <div>
         <h1>Lua</h1>
-        <div>argparse()</div>
+        <div><span class="color">function</span> argparse()</div>
+        <p>
+          {<br>
+            &emsp;<span class="color">command</span>=<span class="color">nil</span> or some string,<br>
+            &emsp;<span class="color">options</span>={ string table },<br>
+            &emsp;<span class="color">flags</span>={ boolean table },<br>
+            &emsp;<span class="color">args</span>={ string array }<br>
+          }<br>
+        </p>
       </div>
     </div>
   </div>

@@ -39,9 +39,63 @@
       Define the default file to write the generated code to.
     </p>
     <h2>parameters</h2>
+    <p>
+      A JSON object with optional <i>min</i> and <i>max</i> integers that represent the minimum and maximum number of arguments (respectively).
+      If you omit either field, it means you can have infinite arguments (if you omit <i>max</i>) or as few as zero (if you omit <i>min</i>).
+      The minimum and maximum values don't count commands, flags or options.
+    </p>
+    <div class="code">
+      <span class="color">"parameters"</span>:{<br>
+        &emsp;<span class="color">"min"</span>:1,<br>
+        &emsp;<span class="color">"max"</span>:2<br>
+      }<br>
+    </div>
     <h2>flags</h2>
+    <p>
+      Flags are strings that your command line tool recognizes as keywords anywhere in the arguments list.
+      Once your parameters are parsed, you can check whether or not these flags were given.
+      They are essentially a boolean value (whether or not it exists).
+      Flags all have a label (the reference to this flag as it exists in the code), and one or more names (the strings that your tool maps to a certain label).
+    </p>
+    <div class="code">
+      <span class="color">"flags"</span>:[<br>
+        &emsp;{<br>
+          &emsp;&emsp;<span class="color">"label"</span>:<span class="color">"string"</span>,<br>
+          &emsp;&emsp;<span class="color">"names"</span>:[<span class="color">"string1"</span>,<span class="color">"string2"</span>,...],<br>
+        &emsp;},<br>
+        &emsp;...<br>
+      ]<br>
+    </div>
     <h2>options</h2>
+    <p>
+      Options are keywords that are given a string value in the command line.
+      Think flags, but instead of a boolen value (whether or not it exists) it's given a string value (the argument passed right after the option keyword).
+      Options have the same label and names structure as flags.
+    </p>
+    <div class="code">
+      <span class="color">"options"</span>:[<br>
+        &emsp;{<br>
+          &emsp;&emsp;<span class="color">"label"</span>:<span class="color">"string"</span>,<br>
+          &emsp;&emsp;<span class="color">"names"</span>:[<span class="color">"string1"</span>,<span class="color">"string2"</span>,...],<br>
+        &emsp;},<br>
+        &emsp;...<br>
+      ]<br>
+    </div>
     <h2>commands</h2>
+    <p>
+      A command is a keyword that comes at the beginning of your arguments list.
+      It can tell your tool what the user wants to do.
+      It also allows you to define different flags and options fields for each command.
+    </p>
+    <div class="code">
+      <span class="color">"commands"</span>:{<br>
+        &emsp;<span class="color">"string"</span>:{<br>
+          &emsp;&emsp;<span class="color">"flags"</span>:[...],<br>
+          &emsp;&emsp;<span class="color">"options"</span>:[...],<br>
+        &emsp;},<br>
+        &emsp;...<br>
+      }<br>
+    </div>
     <hr>
   </div>
 
@@ -56,29 +110,29 @@
         <h1>C++</h1>
         <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
       </div>
-      <div>
+      <!--<div>
         <h1>Java</h1>
         <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
-      </div>
+      </div>-->
       <div>
         <h1>Python</h1>
-        <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
+        <div>argparse()</div>
       </div>
       <div>
         <h1>Ruby</h1>
-        <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
+        <div>argparse()</div>
       </div>
       <div>
         <h1>Node.js</h1>
-        <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
+        <div>argparse()</div>
       </div>
       <div>
         <h1>Bash</h1>
-        <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
+        <div>argparse()</div>
       </div>
       <div>
         <h1>Lua</h1>
-        <div><span class="color">ArgBox</span> argparse(<span class="color">int</span> argc,<span class="color">char</span>** argv);</div>
+        <div>argparse()</div>
       </div>
     </div>
   </div>

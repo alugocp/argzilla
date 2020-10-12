@@ -264,6 +264,14 @@ a:hover{
   color:var(--dark);
   font-size:18px;
 }
+.config-ref .code{
+  background-color:var(--light);
+  padding:15px 25px;
+  margin-bottom:30px;
+}
+.config-ref .code .color{
+  color:var(--dark);
+}
 @media only screen and (max-width:1000px){
   .config-ref{
     padding:0 5px;

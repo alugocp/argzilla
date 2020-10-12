@@ -19,7 +19,7 @@ function ensureString(obj){
 }
 function validateOptions(config){
   if(config.options!=undefined){
-    ensureList(config.options,1);
+    ensureList(config.options);
     for(var a in config.options){
       let obj=config.options[a];
       validateKeys(obj,["names","label"]);
@@ -33,7 +33,7 @@ function validateOptions(config){
 }
 function validateFlags(config){
   if(config.flags!=undefined){
-    ensureList(config.flags,1);
+    ensureList(config.flags);
     for(var a in config.flags){
       let obj=config.flags[a];
       validateKeys(obj,["names","label"]);

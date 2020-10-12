@@ -30,7 +30,7 @@ if(result.command=="init"){
     argzilla.error("'argzilla.json' already exists here");
     process.exit(1);
   }
-  fs.writeFileSync("argzilla.json",`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"parameters":{},\n\t"options":[],\n\t"flags":[],\n\t"commands":{}\n}`);
+  fs.writeFileSync("argzilla.json",`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"parameters":{\n\t\t"min":0,\n\t\t"max":2\n\t},\n\t"options":[\n\t\t{\n\t\t\t"label":"option1",\n\t\t\t"names":["-option","--option"]\n\t\t}\n\t],\n\t"flags":[\n\t\t{\n\t\t\t"label":"flag1",\n\t\t\t"names":["-flag","--flag"]\n\t\t}\n\t],\n\t"commands":{\n\t\t"command1":{\n\t\t\t"options":[],\n\t\t\t"flags":[]\n\t\t}\n\t}\n}`);
   process.exit(0);
 }
 

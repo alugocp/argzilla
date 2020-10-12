@@ -26,7 +26,11 @@ if(result.flags["help"]){
 
 // Handle init
 if(result.command=="init"){
-  console.log(`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"parameters":{},\n\t"options":[],\n\t"flags":[],\n\t"commands":{}\n}`);
+  if(fs.existsSync("argzilla.json")){
+    argzilla.error("'argzilla.json' already exists here");
+    process.exit(1);
+  }
+  fs.writeFileSync("argzilla.json",`{\n\t"language":"node",\n\t"out":"argparse.js",\n\t"parameters":{},\n\t"options":[],\n\t"flags":[],\n\t"commands":{}\n}`);
   process.exit(0);
 }
 

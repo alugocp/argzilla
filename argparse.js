@@ -2,7 +2,7 @@
 module.exports=function(){
 	let argbox={options:{},flags:{},args:[]};
 	let params=process.argv;
-	if(params>2 && params[2]=="init"){
+	if(params.length>2 && params[2]=="init"){
 		argbox.command="init";
 	for(var a=3;a<params.length;a++){
 		let param=params[a];

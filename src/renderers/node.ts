@@ -20,10 +20,10 @@ export class NodeRenderer extends Renderer{
   commandNode(children:string[],i:number,name?:string):string{
     let code=null;
     if(i==0){
-      if(name) code=`\tif(params>2 && params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
+      if(name) code=`\tif(params.length>2 && params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
       else code=this.loopNode(2,children);
     }else{
-      if(name) code=`\telse if(params>2 && params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
+      if(name) code=`\telse if(params.length>2 && params[2]==\"${name}\"){\n\t\targbox.command=\"${name}\";\n${this.loopNode(3,children)}\t}\n`;
       else code=`\telse{\n${this.loopNode(2,children)}\t}\n`;
     }
     return code;

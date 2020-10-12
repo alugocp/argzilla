@@ -1,87 +1,83 @@
-#!/bin/bash
-command="argzilla"
-args1=( "-p" "-l" "ruby" "yo" "sup" )
+#!/usr/bin/env python3
+import subprocess as sub
+import sys
 
-function print_result {
-  if [ "$1" == "0" ]; then
-    printf "\u001b[32mSuccess\u001b[0m\n"
-  else
-    printf "\u001b[31mFailure\u001b[0m\n"
-  fi
-}
+# Helper functions
+def delete(file):
+    sub.run(["rm","-rf",file])
+def argzilla(lang,out):
+    sub.run(["argzilla","-l",lang,"-o",out])
 
-# Testing Bash
-printf "\u001b[4mBash\u001b[0m\n"
-$command -p -l bash > tests/argparse.sh
-printf "No args..."
-bash tests/test.sh > /dev/null 2>&1
-print_result $?
-printf "Args 1..."
-bash tests/test.sh ${args1[@]} > /dev/null 2>&1
-print_result $?
-rm tests/argparse.sh
-echo ""
+# Testing base
+class Test:
+    def __init__(self,name,args):
+        self.name=name
+        self.args=args
+class Tester:
+    def _test(self): pass
+    def compile(self): pass
+    def test(self,test):
+        sys.stdout.write("%s..."%test.name)
+        sys.stdout.flush()
+        cmd=self._test()
+        cmd.extend(test.args)
+        res=sub.run(cmd,stdout=sub.DEVNULL,stderr=sub.DEVNULL)
+        code=res.returncode
+        if code: sys.stdout.write("\u001b[31mFailure\u001b[0m\n")
+        else: sys.stdout.write("\u001b[32mSuccess\u001b[0m\n")
 
-# Testing C++
-printf "\u001b[4mC++\u001b[0m\n"
-$command -p -l cpp > tests/argparse.cpp
-g++ tests/test.cpp -o tests/a.out
-printf "No args..."
-{ ./tests/a.out; } 2> /dev/null
-print_result $?
-printf "Args 1..."
-{ ./tests/a.out ${args1[@]}; } 2> /dev/null
-print_result $?
-rm tests/argparse.cpp tests/a.out
-echo ""
+# Testers bank
+class BashTester(Tester):
+    def compile(self):
+        delete("tests/argparse.sh")
+        argzilla("bash","tests/argparse.sh")
+    def name(self): return "Bash"
+    def _test(self): return ["bash","tests/test.sh"]
+class LuaTester(Tester):
+    def compile(self):
+        delete("tests/argparse.lua")
+        argzilla("lua","tests/argparse.lua")
+    def name(self): return "Lua"
+    def _test(self): return ["lua5.3","tests/test.lua"]
+class NodeTester(Tester):
+    def compile(self):
+        delete("tests/argparse.js")
+        argzilla("node","tests/argparse.js")
+    def name(self): return "Node.js"
+    def _test(self): return ["nodejs","tests/test.js"]
+class PythonTester(Tester):
+    def compile(self):
+        delete("tests/argparse.py")
+        argzilla("python","tests/argparse.py")
+    def name(self): return "Python"
+    def _test(self): return ["python","tests/test.py"]
+class RubyTester(Tester):
+    def compile(self):
+        delete("tests/argparse.rb")
+        argzilla("ruby","tests/argparse.rb")
+    def name(self): return "Ruby"
+    def _test(self): return ["ruby","tests/test.rb"]
+class CppTester(Tester):
+    def compile(self):
+        delete("tests/argparse.cpp")
+        argzilla("cpp","tests/argparse.cpp")
+        delete("tests/a.out")
+        sub.run(["g++","tests/test.cpp","-o","tests/a.out"])
+    def name(self): return "C++"
+    def _test(self): return ["./tests/a.out"]
 
-# Testing Java
-printf "\u001b[4mJava\u001b[0m\n"
-echo ""
+# Tests
+tests=[
+    Test("no_args",[]),
+    Test("args1",["-p","-l","ruby","yo","sup"])
+]
 
-# Testing Lua
-printf "\u001b[4mLua\u001b[0m\n"
-$command -p -l lua > tests/argparse.lua
-printf "No args..."
-lua5.3 tests/test.lua > /dev/null 2>&1
-print_result $?
-printf "Args 1..."
-lua5.3 tests/test.lua ${args1[@]} > /dev/null 2>&1
-print_result $?
-rm tests/argparse.lua
-echo ""
+# Main
+testers=[BashTester(),LuaTester(),NodeTester(),PythonTester(),RubyTester(),CppTester()]
 
-# Testing Node.js
-printf "\u001b[4mNode.js\u001b[0m\n"
-$command -p -l node > tests/argparse.js
-printf "No args..."
-nodejs tests/test.js > /dev/null 2>&1
-print_result $?
-printf "Args 1..."
-nodejs tests/test.js ${args1[@]} > /dev/null 2>&1
-print_result $?
-rm tests/argparse.js
-echo ""
-
-# Testing Python
-printf "\u001b[4mPython\u001b[0m\n"
-$command -p -l python > tests/argparse.py
-printf "No args..."
-python tests/test.py > /dev/null 2>&1
-print_result $?
-printf "Args 1..."
-python tests/test.py ${args1[@]} > /dev/null 2>&1
-print_result $?
-rm tests/argparse.py
-echo ""
-
-# Testing Ruby
-printf "\u001b[4mRuby\u001b[0m\n"
-$command -p -l ruby > tests/argparse.rb
-printf "No args..."
-ruby tests/test.rb > /dev/null 2>&1
-print_result $?
-printf "Args 1..."
-ruby tests/test.rb ${args1[@]} > /dev/null 2>&1
-print_result $?
-#rm tests/argparse.rb
+for tester in testers:
+    sys.stdout.write("\u001b[4m%s\u001b[0m\n"%tester.name())
+    tester.compile()
+    for test in tests:
+        tester.test(test)
+    print("")

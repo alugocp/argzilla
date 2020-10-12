@@ -5,6 +5,10 @@ export class BashRenderer extends Renderer{
 
   initNode(children:string[],minargs?:number):string{
     let code=`# ${Strings.disclaimer}\n`;
+    let errors=Object.keys(Strings.errors);
+    for(var e in errors){
+      code+=`${Strings.errors[errors[e]]}=${parseInt(e)+1}\n`;
+    }
     code+="params=( $@ )\n";
     code+="argbox_args=( )\n";
     code+="argbox_command=0\n";
@@ -14,9 +18,10 @@ export class BashRenderer extends Renderer{
     code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif [ \$\{#argbox_args[@]\} < ${minargs} ]; then\n`;
-      code+=`\t\t\techo \"${Strings.too_few_args}\" && exit 1\n`;
+      code+=`\t\t\treturn ${Strings.errors.too_few_args}\n`;
       code+="\t\tfi\n";
     }
+    code+="\treturn 0\n";
     code+="}\n";
     return code;
   }
@@ -58,7 +63,7 @@ export class BashRenderer extends Renderer{
       code+="\t\t\t\ta+=1\n";
       code+="\t\t\t\tcontinue\n";
       code+="\t\t\telse\n";
-      code+=`\t\t\t\techo \"${Strings.missing_option(option.names[a])}\" && exit 1\n`;
+      code+=`\t\t\treturn ${Strings.errors.missing_option}\n`;
       code+="\t\t\tfi\n";
       code+="\t\tfi\n";
     }
@@ -67,11 +72,11 @@ export class BashRenderer extends Renderer{
   argNode(maxargs?:number):string{
     let code="";
     if(maxargs==0){
-      code+=`\t\techo \"${Strings.too_many_args}\" && exit 1\n`;
+      code+=`\t\treturn ${Strings.errors.too_many_args}\n`;
     }else{
       if(maxargs!=undefined){
         code+=`\t\tif [ \$\{#argbox[\"args\"]\} == ${maxargs} ]; then\n`;
-        code+=`\t\t\techo \"${Strings.too_many_args}\" && exit 1\n`;
+        code+=`\t\t\treturn ${Strings.errors.too_many_args}\n`;
         code+="\t\tfi\n";
       }
       code+="\t\targbox_args=( ${argbox_args[@]} param )\n";

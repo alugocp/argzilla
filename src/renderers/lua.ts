@@ -7,13 +7,18 @@ export class LuaRenderer extends Renderer{
 
   initNode(children:string[],minargs?:number):string{
     let code=`-- ${Strings.disclaimer}\n`;
+    let errors=Object.keys(Strings.errors);
+    for(var e in errors){
+      code+=`${Strings.errors[errors[e]]}=${parseInt(e)+1}\n`;
+    }
     code+="function argparse()\n";
-    code+="\targbox={options={},flags={},args={}}\n";
+    code+="\targbox={options={},flags={},args={},error=0}\n";
     code+="\tparams=arg\n";
     code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif #argbox.args<${minargs} then\n`;
-      code+=`\t\t\t-- error(\"${Strings.too_few_args}\")\n`;
+      code+=`\t\t\targbox.error=${Strings.errors.too_few_args}\n`;
+      code+="\t\t\tif argbox.error>0 then return argbox end\n";
       code+="\t\tend\n";
     }
     code+="\treturn argbox\nend\n";
@@ -58,7 +63,8 @@ export class LuaRenderer extends Renderer{
       code+="\t\t\t\ta=a+1\n";
       code+=`\t\t\t\tgoto continue${this.continue_counter}\n`;
       code+="\t\t\telse\n";
-      code+=`\t\t\t\t-- error(\"${Strings.missing_option(option.names[a])}\")\n`;
+      code+=`\t\t\t\targbox.error=${Strings.errors.missing_option}\n`;
+      code+=`\t\t\t\tif argbox.error>0 then return argbox end\n`;
       code+="\t\t\tend\n";
       code+="\t\tend\n";
     }
@@ -67,11 +73,13 @@ export class LuaRenderer extends Renderer{
   argNode(maxargs?:number):string{
     let code="";
     if(maxargs==0){
-      code+=`\t\t-- error(\"${Strings.too_many_args}\")\n`;
+      code+=`\t\targbox.error=${Strings.errors.too_many_args}\n`;
+      code+=`\t\tif argbox.error>0 then return argbox end\n`;
     }else{
       if(maxargs!=undefined){
         code+=`\t\tif #argbox.args==${maxargs} then\n`;
-        code+=`\t\t\t-- error(\"${Strings.too_many_args}\")\n`;
+        code+=`\t\t\targbox.error=${Strings.errors.too_many_args}\n`;
+        code+=`\t\tif argbox.error>0 then return argbox end\n`;
         code+="\t\tend\n";
       }
       code+="\t\ttable.insert(argbox.args,param)\n";

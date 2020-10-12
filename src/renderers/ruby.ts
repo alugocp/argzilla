@@ -5,13 +5,18 @@ export class RubyRenderer extends Renderer{
 
   initNode(children:string[],minargs?:number):string{
     let code=`# ${Strings.disclaimer}\n`;
+    let errors=Object.keys(Strings.errors);
+    for(var e in errors){
+      code+=`${Strings.errors[errors[e]]}=${parseInt(e)+1}\n`;
+    }
     code+="def argparse\n";
-    code+="\targbox={options:{},flags:{},args:[]}\n";
+    code+="\targbox={options:{},flags:{},args:[],error:0}\n";
     code+="\tparams=ARGV\n";
     code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif argbox[:args].length<${minargs} then\n`;
-      code+=`\t\t\t# raise \"${Strings.too_few_args}\"\n`;
+      code+=`\t\t\targbox[:error]=${Strings.errors.too_few_args}\n`;
+      code+="\t\t\treturn argbox\n";
       code+="\t\tend\n";
     }
     code+="\treturn argbox\nend\n";
@@ -55,7 +60,8 @@ export class RubyRenderer extends Renderer{
       code+="\t\t\t\ta+=1\n";
       code+="\t\t\t\tnext\n";
       code+="\t\t\telse\n";
-      code+=`\t\t\t\t# raise \"${Strings.missing_option(option.names[a])}\"\n`;
+      code+=`\t\t\t\targbox[:error]=${Strings.errors.missing_option}\n`;
+      code+="\t\t\t\treturn argbox\n";
       code+="\t\t\tend\n";
       code+="\t\tend\n";
     }
@@ -64,11 +70,13 @@ export class RubyRenderer extends Renderer{
   argNode(maxargs?:number):string{
     let code="";
     if(maxargs==0){
-      code+=`\t\t# raise \"${Strings.too_many_args}\"\n`;
+      code+=`\t\targbox[:error]=${Strings.errors.too_many_args}\n`;
+      code+="\t\treturn argbox\n";
     }else{
       if(maxargs!=undefined){
         code+=`\t\tif argbox[:args].length==${maxargs} then\n`;
-        code+=`\t\t\t# raise \"${Strings.too_many_args}\"\n`;
+        code+=`\t\t\targbox[:error]=${Strings.errors.too_many_args}\n`;
+        code+="\t\t\treturn argbox\n";
         code+="\t\tend\n";
       }
       code+="\t\targbox[:args].push(param)\n";

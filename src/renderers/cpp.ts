@@ -7,6 +7,10 @@ export class CppRenderer extends Renderer{
     let code=`// ${Strings.disclaimer}\n`;
     code+="#include <string.h>\n";
     code+="#include <vector>\n";
+    let errors=Object.keys(Strings.errors);
+    for(var e in errors){
+      code+=`const int ${Strings.errors[errors[e]]}=${parseInt(e)+1};\n`;
+    }
     let flagLabels=this.aggregateFlagLabels();
     code+="typedef struct{\n";
     for(var a in flagLabels) code+=`\tbool ${flagLabels[a]};\n`;
@@ -20,13 +24,15 @@ export class CppRenderer extends Renderer{
     code+="\tOptions options;\n";
     code+="\tFlags flags;\n";
     code+="\tchar* command;\n";
+    code+="\tint error;\n";
     code+="} ArgBox;\n";
     code+="ArgBox argparse(int argc,char** argv){\n";
     code+="\tArgBox argbox;\n";
     code+=children.reduce((x,y) => x+y);
     if(minargs!=undefined){
       code+=`\t\tif(argbox.args.size()<${minargs}){\n`;
-      code+=`\t\t\t//throw new Error(\"${Strings.too_few_args}\");\n`;
+      code+=`\t\t\targbox.error=${Strings.errors.too_few_args};\n`;
+      code+="\t\t\treturn argbox;\n";
       code+="\t\t}\n";
     }
     code+="\treturn argbox;\n}\n";
@@ -69,7 +75,8 @@ export class CppRenderer extends Renderer{
       code+=`\t\t\t\targbox.options.${option.label}=argv[++a];\n`;
       code+="\t\t\t\tcontinue;\n";
       code+="\t\t\t}else{\n";
-      code+=`\t\t\t\t//throw new Error(\"${Strings.missing_option(option.names[a])}\");\n`;
+      code+=`\t\t\t\targbox.error=${Strings.errors.missing_option};\n`;
+      code+="\t\t\t\treturn argbox;\n";
       code+="\t\t\t}\n";
       code+="\t\t}\n";
     }
@@ -78,11 +85,13 @@ export class CppRenderer extends Renderer{
   argNode(maxargs?:number):string{
     let code="";
     if(maxargs==0){
-      code+=`\t\t//throw new Error(\"${Strings.too_many_args}\");\n`;
+      code+=`\t\targbox.error=${Strings.errors.too_many_args};\n`;
+      code+="\t\treturn argbox;\n";
     }else{
       if(maxargs!=undefined){
         code+=`\t\tif(argbox.args.size()==${maxargs}){\n`;
-        code+=`\t\t\t//throw new Error(\"${Strings.too_many_args}\");\n`;
+        code+=`\t\t\targbox.error=${Strings.errors.too_many_args};\n`;
+        code+="\t\t\treturn argbox;\n";
         code+="\t\t}\n";
       }
       code+="\t\targbox.args.push_back(param);\n";

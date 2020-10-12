@@ -1,2 +1,2 @@
-const argparse=require("./argparse.js");
-argparse();
+const argzilla=require("./argparse.js");
+argzilla.argparse();
